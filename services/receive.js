@@ -34,6 +34,7 @@ module.exports = class Receive {
     try {
       if (event.message) {
         let message = event.message;
+console.log("MESSAGE TYPE ",event.message);
 
         if (message.quick_reply) {
           responses = this.handleQuickReply();
