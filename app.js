@@ -10,6 +10,10 @@
 
 "use strict";
 
+const https = require('https');
+const fs = require('fs');
+
+
 // Imports dependencies and set up http server
 const express = require("express"),
   { urlencoded, json } = require("body-parser"),
@@ -30,6 +34,26 @@ app.use(
     extended: true
   })
 );
+
+// Certificate
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/facebookapp.opensourcebrokers.ca/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/facebookapp.opensourcebrokers.ca/fullchain.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/facebookapp.opensourcebrokers.ca/chain.pem', 'utf8');
+
+const credentials = {
+        key: privateKey,
+        cert: certificate,
+        ca: ca
+};
+
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(443, () => {
+        console.log('HTTPS Server running on port 443');
+});
+
+
+
 
 // Parse application/json. Verify that callback came from Facebook
 app.use(json({ verify: verifyRequestSignature }));
@@ -102,16 +126,16 @@ app.post("/webhook", (req, res) => {
 
       // Gets the body of the webhook event
       let webhookEvent = entry.messaging[0];
-      // console.log(webhookEvent);
+       console.log(webhookEvent);
 
       // Discard uninteresting events
       if ("read" in webhookEvent) {
-        // console.log("Got a read event");
+         console.log("Got a read event");
         return;
       }
 
       if ("delivery" in webhookEvent) {
-        // console.log("Got a delivery event");
+         console.log("Got a delivery event");
         return;
       }
 
@@ -129,7 +153,7 @@ app.post("/webhook", (req, res) => {
             // The profile is unavailable
             console.log("Profile is unavailable:", error);
           })
-          .finally(() => {
+          .then(() => {
             users[senderPsid] = user;
             i18n.setLocale(user.locale);
             console.log(
