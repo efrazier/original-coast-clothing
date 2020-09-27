@@ -131,11 +131,12 @@ module.exports = class Response {
       })
     );
 
-    let guide = this.genText(i18n.__("get_started.guidance"));
+    //let guide = this.genText(i18n.__("get_started.bdo-start"));
 
-    let curation = this.genQuickReply(i18n.__("get_started.help"), [
+    let curation = this.genQuickReply(i18n.__("get_started.bdo-start"), [
       {
-        title: i18n.__("menu.suggestion"),
+        //title: i18n.__("menu.suggestion"),
+        title: i18n.__("menu.bdo-debt-yes"),
         payload: "CURATION"
       },
       {
@@ -144,6 +145,7 @@ module.exports = class Response {
       }
     ]);
 
-    return [welcome, guide, curation];
+    //return [welcome, guide, curation];
+    return [curation];
   }
 };

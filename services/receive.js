@@ -34,7 +34,9 @@ module.exports = class Receive {
     try {
       if (event.message) {
         let message = event.message;
-console.log("MESSAGE TYPE ",event.message);
+console.log("MESSAGE TYPE NLP? ",event.message.nlp.entities);
+console.log("MESSAGE REF? ",event );
+console.log("REF --- END");
 
         if (message.quick_reply) {
           responses = this.handleQuickReply();
@@ -181,7 +183,8 @@ console.log("MESSAGE TYPE ",event.message);
     if (
       payload === "GET_STARTED" ||
       payload === "DEVDOCS" ||
-      payload === "GITHUB"
+      payload === "GITHUB" ||
+      payload === "AD"
     ) {
       response = Response.genNuxMessage(this.user);
     } else if (payload.includes("CURATION") || payload.includes("COUPON")) {
