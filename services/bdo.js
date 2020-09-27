@@ -16,7 +16,7 @@ const Response = require("./response"),
   config = require("./config"),
   i18n = require("../i18n.config");
 
-module.exports = class Care {
+module.exports = class bdo {
   constructor(user, webhookEvent) {
     this.user = user;
     this.webhookEvent = webhookEvent;
@@ -26,102 +26,102 @@ module.exports = class Care {
     let response;
 
     switch (payload) {
-      case "CARE_HELP":
+      case "bdo_HELP":
         response = Response.genQuickReply(
-          i18n.__("care.prompt", {
+          i18n.__("bdo.prompt", {
             userFirstName: this.user.firstName
           }),
           [
             {
-              title: i18n.__("care.order"),
-              payload: "CARE_ORDER"
+              title: i18n.__("bdo.order"),
+              payload: "bdo_ORDER"
             },
             {
-              title: i18n.__("care.billing"),
-              payload: "CARE_BILLING"
+              title: i18n.__("bdo.billing"),
+              payload: "bdo_BILLING"
             },
             {
-              title: i18n.__("care.other"),
-              payload: "CARE_OTHER"
+              title: i18n.__("bdo.other"),
+              payload: "bdo_OTHER"
             }
           ]
         );
         break;
-      case "CARE_ORDER":
+      case "bdo_ORDER":
         // Send using the Persona for order issues
 
         response = [
           Response.genTextWithPersona(
-            i18n.__("care.issue", {
+            i18n.__("bdo.issue", {
               userFirstName: this.user.firstName,
               agentFirstName: config.personaOrder.name,
-              topic: i18n.__("care.order")
+              topic: i18n.__("bdo.order")
             }),
             config.personaOrder.id
           ),
           Response.genTextWithPersona(
-            i18n.__("care.end"),
+            i18n.__("bdo.end"),
             config.personaOrder.id
           ),
           Survey.genAgentRating(config.personaOrder.name)
         ];
         break;
 
-      case "CARE_BILLING":
+      case "bdo_BILLING":
         // Send using the Persona for billing issues
 
         response = [
           Response.genTextWithPersona(
-            i18n.__("care.issue", {
+            i18n.__("bdo.issue", {
               userFirstName: this.user.firstName,
               agentFirstName: config.personaBilling.name,
-              topic: i18n.__("care.billing")
+              topic: i18n.__("bdo.billing")
             }),
             config.personaBilling.id
           ),
           Response.genTextWithPersona(
-            i18n.__("care.end"),
+            i18n.__("bdo.end"),
             config.personaBilling.id
           ),
           Survey.genAgentRating(config.personaBilling.name)
         ];
         break;
 
-      case "CARE_SALES":
+      case "bdo_SALES":
         // Send using the Persona for sales questions
 
         response = [
           Response.genTextWithPersona(
-            i18n.__("care.style", {
+            i18n.__("bdo.style", {
               userFirstName: this.user.firstName,
               agentFirstName: config.personaSales.name
             }),
             config.personaSales.id
           ),
           Response.genTextWithPersona(
-            i18n.__("care.end"),
+            i18n.__("bdo.end"),
             config.personaSales.id
           ),
           Survey.genAgentRating(config.personaSales.name)
         ];
         break;
 
-      case "CARE_OTHER":
-        // Send using the Persona for customer care issues
+      case "bdo_OTHER":
+        // Send using the Persona for customer bdo issues
 
         response = [
           Response.genTextWithPersona(
-            i18n.__("care.default", {
+            i18n.__("bdo.default", {
               userFirstName: this.user.firstName,
-              agentFirstName: config.personaCare.name
+              agentFirstName: config.personabdo.name
             }),
-            config.personaCare.id
+            config.personabdo.id
           ),
           Response.genTextWithPersona(
-            i18n.__("care.end"),
-            config.personaCare.id
+            i18n.__("bdo.end"),
+            config.personabdo.id
           ),
-          Survey.genAgentRating(config.personaCare.name)
+          Survey.genAgentRating(config.personabdo.name)
         ];
         break;
     }
