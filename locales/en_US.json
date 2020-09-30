@@ -65,8 +65,7 @@
 		"struggle": "1",
 		"minpay": "2",
 		"advice": "3",
-		"reduct": "4",
-		"yes1": "bdo.yes1"
+		"reduce": "4"
 	},
 	"survey": {
 		"prompt": "Hi, want to get quick feedback on your recent experience with {{agentFirstName}}",
