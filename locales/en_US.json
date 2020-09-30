@@ -60,6 +60,15 @@
     "end": "This is as far as the demo goes. Leverage the power of the messenger platform for your business. See https://fb.me/get-sample-oc to learn how to build a similar experience",
     "help": "Help"
   },
+  "bdo": {
+      "prompt":"BDO has a number of resources on Debt Solutions.  \n\n Get the help you need.  \n\nRead More.  \n\nhttps://debtsolutions.bdo.ca/",
+      "yesmenu":"1. I am struggling financially  \n\n2. I can only make minimum payments on my debts  \n\n3. I am looking for budgeting advice  \n\n4. I want to reduce interest charges  \n\n",
+      "struggle":"1",
+      "minpay":"2",
+      "advice":"3",
+      "reduct":"4",
+
+  },
   "survey": {
     "prompt": "Hi, want to get quick feedback on your recent experience with {{agentFirstName}}",
     "positive": "Thanks for the feedback",
