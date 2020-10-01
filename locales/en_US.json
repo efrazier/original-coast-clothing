@@ -65,7 +65,12 @@
 		"struggle": "1",
 		"minpay": "2",
 		"advice": "3",
-		"reduce": "4"
+		"reduce": "4",
+		"style": "bdo.style",
+		"end": "bdo.end",
+		"talktosomeone": "bdo.talktosomeone",
+		"phone": "bdo.phone",
+		"email": "bdo.email"
 	},
 	"survey": {
 		"prompt": "Hi, want to get quick feedback on your recent experience with {{agentFirstName}}",

@@ -14,6 +14,7 @@ const Curation = require("./curation"),
   Order = require("./order"),
   Response = require("./response"),
   Care = require("./care"),
+  Bdo = require("./bdo"),
   Survey = require("./survey"),
   GraphAPi = require("./graph-api"),
   i18n = require("../i18n.config");
@@ -34,9 +35,9 @@ module.exports = class Receive {
     try {
       if (event.message) {
         let message = event.message;
-console.log("MESSAGE TYPE NLP? ",event.message.nlp.entities);
-console.log("MESSAGE REF? ",event );
-console.log("REF --- END");
+        console.log("MESSAGE TYPE NLP? ",event.message.nlp.entities);
+        console.log("MESSAGE REF? ",event );
+        console.log("REF --- END");
 
         if (message.quick_reply) {
           responses = this.handleQuickReply();
@@ -95,6 +96,17 @@ console.log("REF --- END");
     } else if (message.includes(i18n.__("care.help").toLowerCase())) {
       let care = new Care(this.user, this.webhookEvent);
       response = care.handlePayload("CARE_HELP");
+
+    } else if (message.includes(i18n.__("I'm doing research").toLowerCase())) {
+      let bdo = new Bdo(this.user, this.webhookEvent);
+      response = bdo.handlePayload("RESEARCH");
+    } else if (message.includes(i18n.__("Yes").toLowerCase())) {
+      let bdo = new Bdo(this.user, this.webhookEvent);
+      response = bdo.handlePayload("YES");
+    } else if (message.includes(i18n.__("4").toLowerCase())) {
+      let bdo = new Bdo(this.user, this.webhookEvent);
+      response = bdo.handlePayload("bdo_reduce");
+
     } else {
       response = [
         Response.genText(
@@ -178,7 +190,6 @@ console.log("REF --- END");
     GraphAPi.callFBAEventsAPI(this.user.psid, payload);
 
     let response;
-
     // Set the response based on the payload
     if (
       payload === "GET_STARTED" ||
@@ -193,6 +204,11 @@ console.log("REF --- END");
     } else if (payload.includes("CARE")) {
       let care = new Care(this.user, this.webhookEvent);
       response = care.handlePayload(payload);
+
+    } else if (payload.includes("research") || payload.includes("bdo_reduce")){
+console.log("PAYLOAD research or bdo_reduce");
+      let bdo = new Bdo(this.user, this.webhookEvent);
+      response = bdo.handlePayload(payload);
     } else if (payload.includes("ORDER")) {
       response = Order.handlePayload(payload);
     } else if (payload.includes("CSAT")) {

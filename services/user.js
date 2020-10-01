@@ -20,6 +20,7 @@ module.exports = class User {
     this.gender = "neutral";
   }
   setProfile(profile) {
+console.log("PROFILE ", profile);
     this.firstName = profile.firstName;
     this.lastName = profile.lastName;
     this.locale = profile.locale;

@@ -14,21 +14,27 @@ const i18n = require("../i18n.config");
 
 module.exports = class Response {
   static genQuickReply(text, quickReplies) {
+
     let response = {
       text: text,
       quick_replies: []
     };
 
     for (let quickReply of quickReplies) {
+      let content_type = 'text'; //keep this as default if quickRelies doesn't override
+      if (typeof quickReply['content_type'] !== 'undefined'){
+         content_type = quickReply['content_type'];
+      }
       response["quick_replies"].push({
-        content_type: "text",
-        title: quickReply["title"],
-        payload: quickReply["payload"]
+        'content_type': content_type,
+        'title': quickReply["title"],
+        'payload': quickReply["payload"]
       });
     }
 
     return response;
   }
+  
 
   static genGenericTemplate(image_url, title, subtitle, buttons) {
     let response = {

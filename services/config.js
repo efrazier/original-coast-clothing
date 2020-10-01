@@ -42,6 +42,9 @@ module.exports = {
   // URL of your website
   shopUrl: process.env.SHOP_URL,
 
+  research: process.env.BDO_URL,
+
+
   // Persona IDs
   personas: {},
 

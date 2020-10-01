@@ -16,7 +16,7 @@ const Response = require("./response"),
   config = require("./config"),
   i18n = require("../i18n.config");
 
-module.exports = class bdo {
+module.exports = class Bdo {
   constructor(user, webhookEvent) {
     this.user = user;
     this.webhookEvent = webhookEvent;
@@ -26,7 +26,7 @@ module.exports = class bdo {
     let response;
 
     switch (payload) {
-      case "bdo_HELP":
+      case "RESEARCHffff":
         response = Response.genQuickReply(
           i18n.__("bdo.prompt", {
             userFirstName: this.user.firstName
@@ -47,12 +47,12 @@ module.exports = class bdo {
           ]
         );
         break;
-      case "bdo_ORDER":
+      case "RESEARCH":
         // Send using the Persona for order issues
-
-        response = [
+/*
+         response = [
           Response.genTextWithPersona(
-            i18n.__("bdo.issue", {
+            i18n.__("bdo.prompt", {
               userFirstName: this.user.firstName,
               agentFirstName: config.personaOrder.name,
               topic: i18n.__("bdo.order")
@@ -62,48 +62,85 @@ module.exports = class bdo {
           Response.genTextWithPersona(
             i18n.__("bdo.end"),
             config.personaOrder.id
-          ),
-          Survey.genAgentRating(config.personaOrder.name)
+          )
+        ];
+*/
+         response = [
+          Response.genText(i18n.__("bdo.prompt")),
+          /*Response.genGenericTemplate(
+            `${config.appUrl}/styles/outfit.jpg`,
+            i18n.__("curation.title"),
+            i18n.__("curation.subtitle"),
+            [
+              Response.genWebUrlButton(
+                i18n.__("curation.shop"),
+                `${config.research}/`
+              ),
+              Response.genPostbackButton(
+                i18n.__("curation.show"),
+                "CURATION_OTHER_STYLE"
+              ),
+              Response.genPostbackButton(
+                i18n.__("curation.sales"),
+                "CARE_SALES"
+              )
+            ]
+          )
+*/
         ];
         break;
 
-      case "bdo_BILLING":
+      case "YES":
         // Send using the Persona for billing issues
-
-        response = [
-          Response.genTextWithPersona(
-            i18n.__("bdo.issue", {
-              userFirstName: this.user.firstName,
-              agentFirstName: config.personaBilling.name,
-              topic: i18n.__("bdo.billing")
-            }),
-            config.personaBilling.id
-          ),
-          Response.genTextWithPersona(
-            i18n.__("bdo.end"),
-            config.personaBilling.id
-          ),
-          Survey.genAgentRating(config.personaBilling.name)
-        ];
+         response = Response.genQuickReply(
+          i18n.__("bdo.yesmenu", {
+            userFirstName: this.user.firstName
+          }),
+          [
+            {
+              title: i18n.__("bdo.struggle"),
+              payload: "bdo_struggle"
+            },
+            {
+              title: i18n.__("bdo.minpay"),
+              payload: "bdo_minpay"
+            },
+            {
+              title: i18n.__("bdo.advice"),
+              payload: "bdo_advice"
+            },
+            {
+              title: i18n.__("bdo.reduce"),
+              payload: "bdo_reduce"
+            },
+             {
+              title: i18n.__("bdo.reduce"),
+              payload: "bdo_reduce",
+              content_type: "user_email"
+            }
+          ]
+        );
         break;
 
-      case "bdo_SALES":
-        // Send using the Persona for sales questions
+      case "bdo_reduce":
 
-        response = [
-          Response.genTextWithPersona(
-            i18n.__("bdo.style", {
-              userFirstName: this.user.firstName,
-              agentFirstName: config.personaSales.name
-            }),
-            config.personaSales.id
-          ),
-          Response.genTextWithPersona(
-            i18n.__("bdo.end"),
-            config.personaSales.id
-          ),
-          Survey.genAgentRating(config.personaSales.name)
-        ];
+            response = Response.genQuickReply(
+          i18n.__("bdo.talktosomeone", {
+            userFirstName: this.user.firstName
+          }),
+          [
+            {
+              title: i18n.__("bdo.phone"),
+              payload: "bdo_phone",
+              content_type: "user_phone_number"
+            },
+             {
+              title: i18n.__("bdo.email"),
+              payload: "bdo_email",
+              content_type: "user_email"
+            }
+          ]
+        );
         break;
 
       case "bdo_OTHER":
