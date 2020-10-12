@@ -8,6 +8,8 @@
  * https://developers.facebook.com/docs/messenger-platform/getting-started/sample-apps/original-coast-clothing
  */
 
+// receive.js 
+
 "use strict";
 
 const Curation = require("./curation"),
@@ -36,8 +38,25 @@ module.exports = class Receive {
       if (event.message) {
         let message = event.message;
         console.log("MESSAGE TYPE NLP? ",event.message.nlp.entities);
+        console.log("USER INFO ", this.user );
         console.log("MESSAGE REF? ",event );
         console.log("REF --- END");
+
+        if (event.message.nlp){
+           let nlp = event.message.nlp.entities;
+
+           for (let [key,val] of Object.entries(nlp)){
+              console.log(`${key}: ${val}`);
+              if (key == 'wit$phone_number:phone_number'){
+                 this.user.phone=nlp[key][0].value; 
+              }
+              if (key == 'wit$email:email'){
+                 this.user.email = nlp[key][0].value;
+              }
+
+           } 
+
+        }
 
         if (message.quick_reply) {
           responses = this.handleQuickReply();
@@ -79,52 +98,49 @@ module.exports = class Receive {
 
     // check greeting is here and is confident
     let greeting = this.firstEntity(this.webhookEvent.message.nlp, "greetings");
+    let phone = this.firstEntity(this.webhookEvent.message.nlp,"wit$phone_number:phone_number");
+    
 
     let message = this.webhookEvent.message.text.trim().toLowerCase();
-
+console.log("MESSAGE DEBUG ", message );
+console.log("PHONE????", phone);
+debugger;
     let response;
 
-    if (
-      (greeting && greeting.confidence > 0.8) ||
-      message.includes("start over")
-    ) {
+    if ( (greeting && greeting.confidence > 0.8) ||  message.includes("start over" ) )
+    {
       response = Response.genNuxMessage(this.user);
-    } else if (Number(message)) {
+    } 
+
+/*
+     else if (Number(message)) {
       response = Order.handlePayload("ORDER_NUMBER");
-    } else if (message.includes("#")) {
+    } 
+
+else if (message.includes("#")) {
       response = Survey.handlePayload("CSAT_SUGGESTION");
     } else if (message.includes(i18n.__("care.help").toLowerCase())) {
       let care = new Care(this.user, this.webhookEvent);
       response = care.handlePayload("CARE_HELP");
-
-    } else if (message.includes(i18n.__("I'm doing research").toLowerCase())) {
+*/
+    else if (message.includes(i18n.__("I'm doing research").toLowerCase())) {
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("RESEARCH");
     } else if (message.includes(i18n.__("Yes").toLowerCase())) {
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("YES");
-    } else if (message.includes(i18n.__("4").toLowerCase())) {
+    } 
+    else if (phone && phone.confidence > 0.8){
+ console.log("BDO Handle Phone");
       let bdo = new Bdo(this.user, this.webhookEvent);
-      response = bdo.handlePayload("bdo_reduce");
-
+      response = bdo.handlePayload("bdo_phone_entry");
     } else {
       response = [
         Response.genText(
           i18n.__("fallback.any", {
             message: this.webhookEvent.message.text
           })
-        ),
-        Response.genText(i18n.__("get_started.guidance")),
-        Response.genQuickReply(i18n.__("get_started.help"), [
-          {
-            title: i18n.__("menu.suggestion"),
-            payload: "CURATION"
-          },
-          {
-            title: i18n.__("menu.help"),
-            payload: "CARE_HELP"
-          }
-        ])
+        )
       ];
     }
 
@@ -198,17 +214,26 @@ module.exports = class Receive {
       payload === "AD"
     ) {
       response = Response.genNuxMessage(this.user);
-    } else if (payload.includes("CURATION") || payload.includes("COUPON")) {
+    } 
+
+ /*
+else if (payload.includes("CURATION") || payload.includes("COUPON")) {
       let curation = new Curation(this.user, this.webhookEvent);
       response = curation.handlePayload(payload);
     } else if (payload.includes("CARE")) {
       let care = new Care(this.user, this.webhookEvent);
       response = care.handlePayload(payload);
 
-    } else if (payload.includes("research") || payload.includes("bdo_reduce")){
-console.log("PAYLOAD research or bdo_reduce");
+*/
+
+
+    else if (payload.includes("research") || payload.includes("bdo_reduce") || payload.includes("bdo") ){
+       console.log("PAYLOAD research or bdo_reduce");
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload(payload);
+
+
+/*
     } else if (payload.includes("ORDER")) {
       response = Order.handlePayload(payload);
     } else if (payload.includes("CSAT")) {
@@ -232,7 +257,9 @@ console.log("PAYLOAD research or bdo_reduce");
           }
         ])
       ];
-    } else {
+    } 
+*/
+     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`
       };

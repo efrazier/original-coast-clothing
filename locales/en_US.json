@@ -1,4 +1,5 @@
 {
+	"4": "4",
 	"profile": {
 		"greeting": "Welcome to Original Coast Clothing {{user_first_name}}! Click get started to enjoy our sample automated messaging experience. If you want to build a similar one visit https://fb.me/get-sample-oc"
 	},
@@ -14,7 +15,7 @@
 	"get_started": {
 		"welcome": "Hi {{userFirstName}}! Welcome to Original Coast Clothing where you'll find styles for every occasion.",
 		"guidance": "At any time, use the menu below to navigate through the features",
-		"bdo-start": "Hi There!   BDO Debt solutions teams are providing free intial consultations and debt help viaphone or by video conference as we are proactively monitoring new COVID-19 developments. Are you Looking for debt help?",
+		"bdo-start": "Hi There!   BDO Debt solutions teams are providing free intial consultations and debt help via phone or by video conference as we are proactively monitoring new COVID-19 developments. Are you Looking for debt help?",
 		"help": "What we can do to help you today with bdo my friend?"
 	},
 	"leadgen": {
@@ -62,14 +63,14 @@
 	"bdo": {
 		"prompt": "BDO has many resources on our web site. Read More.  \n\nhttps://debtsolutions.bdo.ca/",
 		"yesmenu": "Would you like to call us now? Or have us contact you?",
-		"callusbutton": "Click to Call Now 1-888-855-6159",
+		"callusbutton": "Click to Call",
 		"contactthem": "Contact Me",
-		"advice": "3",
+		"phonethanks": "Thanks! We will call you soon!",
 		"reduce": "4",
 		"style": "bdo.style",
 		"end": "bdo.end",
 		"talktosomeone": "Please provide us with your email, name & phone number so a BDO representative can get in touch with you.",
-		"phone": "bdo.phone",
+		"phone": "Phone for BDO to call?",
 		"email": "bdo.email"
 	},
 	"survey": {

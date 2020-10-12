@@ -99,18 +99,18 @@ module.exports = class Bdo {
           [
             {
               title: i18n.__("bdo.callusbutton"),
-              payload: "bdo_reduce",
+              payload: "bdo_callusnow",
             },
             {
               title: i18n.__("bdo.contactthem"),
-              payload: "bdo_minpay"
+              payload: "bdo_contactme"
             }
           ]
         );
         break;
 
-      case "bdo_reduce":
-	response = Response.genButtonTemplatePhone("Phone Me");
+      case "bdo_callusnow":
+	response = Response.genButtonTemplatePhone("Click to Call BDO 888-855-6159");
 /*
      let buttons = [
       Response.genWebUrlButton(
@@ -151,24 +151,24 @@ module.exports = class Bdo {
           ]
         );
   */ 
-        break;
+      break;
 
-      case "bdo_OTHER":
+      case "bdo_contactme":
         // Send using the Persona for customer bdo issues
-
         response = [
-          Response.genTextWithPersona(
-            i18n.__("bdo.default", {
-              userFirstName: this.user.firstName,
-              agentFirstName: config.personabdo.name
-            }),
-            config.personabdo.id
-          ),
-          Response.genTextWithPersona(
-            i18n.__("bdo.end"),
-            config.personabdo.id
-          ),
-          Survey.genAgentRating(config.personabdo.name)
+          Response.genText(
+            i18n.__("bdo.phone", {
+            })
+          )
+        ];
+        break;
+      case "bdo_phone_entry":
+  console.log("CASE PHONE ENTERED");
+      response = [
+          Response.genText(
+            i18n.__("bdo.phonethanks", {
+            })
+          )
         ];
         break;
     }
