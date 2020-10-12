@@ -14,12 +14,12 @@
 		"callusbutton": "Click to Call",
 		"contactthem": "Contact Me",
 		"phonethanks": "Thanks! We will call you soon!",
-                "emailthanks": "Thanks! Please enter your phone Number",
+		"emailthanks": "Thanks! Please enter your phone Number",
 		"reduce": "4",
 		"style": "bdo.style",
 		"end": "bdo.end",
 		"talktosomeone": "Please provide us with your email, name & phone number so a BDO representative can get in touch with you.",
-		"phone": "Phone for BDO to call?",
+		"phone": "Please enter phone number for BDO to call:",
 		"email": "Please enter your email:"
 	},
 	"survey": {
@@ -31,6 +31,12 @@
 	},
 	"fallback": {
 		"any": "Sorry, but I don’t recognize \"{{message}}\".",
-		"attachment": "Thanks for sending this attachment, we can connect you to an agent to review it or we can start over"
+		"attachment": "Hi {{userFirstName}}, This account is monitored Monday - Friday from 9am - 5pm EST. Someone from our team will contact you as soon as possible to ensure you get the help you need. You can also reach us by visiting our website https://debtsolutions.bdo.ca/ or by calling 888-855-6159"
+	},
+	"I'm doing research": "I'm doing research",
+	"Yes": "Yes",
+	"menu": {
+		"help": "menu.help",
+		"start_over": "menu.start_over"
 	}
 }
