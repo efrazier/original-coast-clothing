@@ -37,12 +37,13 @@ module.exports = class Receive {
     try {
       if (event.message) {
         let message = event.message;
-        console.log("MESSAGE TYPE NLP? ",event.message.nlp.entities);
+
         console.log("USER INFO ", this.user );
         console.log("MESSAGE REF? ",event );
         console.log("REF --- END");
 
         if (event.message.nlp){
+           console.log("MESSAGE TYPE NLP: ",event.message.nlp.entities);
            let nlp = event.message.nlp.entities;
 
            for (let [key,val] of Object.entries(nlp)){
@@ -99,12 +100,8 @@ module.exports = class Receive {
     // check greeting is here and is confident
     let greeting = this.firstEntity(this.webhookEvent.message.nlp, "greetings");
     let phone = this.firstEntity(this.webhookEvent.message.nlp,"wit$phone_number:phone_number");
-    
-
+    let email = this.firstEntity(this.webhookEvent.message.nlp,"wit$email:email");
     let message = this.webhookEvent.message.text.trim().toLowerCase();
-console.log("MESSAGE DEBUG ", message );
-console.log("PHONE????", phone);
-debugger;
     let response;
 
     if ( (greeting && greeting.confidence > 0.8) ||  message.includes("start over" ) )
@@ -123,6 +120,7 @@ else if (message.includes("#")) {
       let care = new Care(this.user, this.webhookEvent);
       response = care.handlePayload("CARE_HELP");
 */
+   // THESE ARE SPECIAL CASES THAT HAVE TO BE HANDLED HERE BECAUSE THE PROMPTS COME FROM THE AD!!
     else if (message.includes(i18n.__("I'm doing research").toLowerCase())) {
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("RESEARCH");
@@ -130,10 +128,13 @@ else if (message.includes("#")) {
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("YES");
     } 
+    // These are special payloads without labels aka, bdo.,only NLP types
     else if (phone && phone.confidence > 0.8){
- console.log("BDO Handle Phone");
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("bdo_phone_entry");
+    } else if (email && email.confidence > 0.8){
+      let bdo = new Bdo(this.user, this.webhookEvent);
+      response = bdo.handlePayload("bdo_email_entry");
     } else {
       response = [
         Response.genText(
@@ -157,13 +158,14 @@ else if (message.includes("#")) {
 
     response = Response.genQuickReply(i18n.__("fallback.attachment"), [
       {
-        title: i18n.__("menu.help"),
-        payload: "CARE_HELP"
+        title: i18n.__("bdo.callusbutton"),
+        payload: "bdo_callusnow",
       },
       {
-        title: i18n.__("menu.start_over"),
-        payload: "GET_STARTED"
+        title: i18n.__("bdo.contactthem"),
+        payload: "bdo_contactme"
       }
+          
     ]);
 
     return response;
@@ -227,8 +229,8 @@ else if (payload.includes("CURATION") || payload.includes("COUPON")) {
 */
 
 
-    else if (payload.includes("research") || payload.includes("bdo_reduce") || payload.includes("bdo") ){
-       console.log("PAYLOAD research or bdo_reduce");
+    else if (payload.includes("research") || payload.includes("bdo") ){
+       console.log("BDO - Generic Response");
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload(payload);
 

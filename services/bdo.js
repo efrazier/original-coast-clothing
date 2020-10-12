@@ -26,7 +26,7 @@ module.exports = class Bdo {
     let response;
 
     switch (payload) {
-      case "RESEARCHffff":
+      case "RESEARCH-not-in-use":
         response = Response.genQuickReply(
           i18n.__("bdo.prompt", {
             userFirstName: this.user.firstName
@@ -48,50 +48,12 @@ module.exports = class Bdo {
         );
         break;
       case "RESEARCH":
-        // Send using the Persona for order issues
-/*
-         response = [
-          Response.genTextWithPersona(
-            i18n.__("bdo.prompt", {
-              userFirstName: this.user.firstName,
-              agentFirstName: config.personaOrder.name,
-              topic: i18n.__("bdo.order")
-            }),
-            config.personaOrder.id
-          ),
-          Response.genTextWithPersona(
-            i18n.__("bdo.end"),
-            config.personaOrder.id
-          )
-        ];
-*/
          response = [
           Response.genText(i18n.__("bdo.prompt")),
-          /*Response.genGenericTemplate(
-            `${config.appUrl}/styles/outfit.jpg`,
-            i18n.__("curation.title"),
-            i18n.__("curation.subtitle"),
-            [
-              Response.genWebUrlButton(
-                i18n.__("curation.shop"),
-                `${config.research}/`
-              ),
-              Response.genPostbackButton(
-                i18n.__("curation.show"),
-                "CURATION_OTHER_STYLE"
-              ),
-              Response.genPostbackButton(
-                i18n.__("curation.sales"),
-                "CARE_SALES"
-              )
-            ]
-          )
-*/
         ];
         break;
 
       case "YES":
-        // Send using the Persona for billing issues
          response = Response.genQuickReply(
           i18n.__("bdo.yesmenu", {
             userFirstName: this.user.firstName
@@ -110,7 +72,7 @@ module.exports = class Bdo {
         break;
 
       case "bdo_callusnow":
-	response = Response.genButtonTemplatePhone("Click to Call BDO 888-855-6159");
+	response = Response.genButtonTemplatePhone(i18n.__("bdo.callclick",{ userFirstName: this.user.firstName })   );
 /*
      let buttons = [
       Response.genWebUrlButton(
@@ -154,7 +116,23 @@ module.exports = class Bdo {
       break;
 
       case "bdo_contactme":
-        // Send using the Persona for customer bdo issues
+        response = [
+          Response.genText(
+            i18n.__("bdo.email", {
+            })
+          )
+        ];
+        break;
+      case "bdo_phone_entry":
+        response = [
+          Response.genText(
+            i18n.__("bdo.phonethanks", 
+            { name: this.user.firstName + ' ' +this.user.lastName, email:this.user.email, phone:this.user.phone }
+            )
+          )
+        ];
+        break;
+      case "bdo_email_entry":
         response = [
           Response.genText(
             i18n.__("bdo.phone", {
@@ -162,15 +140,8 @@ module.exports = class Bdo {
           )
         ];
         break;
-      case "bdo_phone_entry":
-  console.log("CASE PHONE ENTERED");
-      response = [
-          Response.genText(
-            i18n.__("bdo.phonethanks", {
-            })
-          )
-        ];
-        break;
+
+
     }
 
     return response;

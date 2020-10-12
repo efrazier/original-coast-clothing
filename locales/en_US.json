@@ -11,9 +11,10 @@
 	"bdo": {
 		"prompt": "BDO has many resources on our web site. Read More.  \n\nhttps://debtsolutions.bdo.ca/",
 		"yesmenu": "Would you like to call us now? Or have us contact you?",
+		"callclick": "Click to Call BDO 888-855-6159",
 		"callusbutton": "Click to Call",
 		"contactthem": "Contact Me",
-		"phonethanks": "Thanks! We will call you soon!",
+		"phonethanks": "Thanks! We will call you soon!  \n\n{{name}}  \n\n{{email}}  \n\n{{phone}}",
 		"emailthanks": "Thanks! Please enter your phone Number",
 		"reduce": "4",
 		"style": "bdo.style",
@@ -30,7 +31,8 @@
 		"suggestion": "Your suggestion has been recorded for future review by the team. If this is something we need to get back to you right now just comment \"help\""
 	},
 	"fallback": {
-		"any": "Sorry, but I don’t recognize \"{{message}}\".",
+		"anyold": "Sorry, but I don’t recognize \"{{message}}\".",
+                "any":"Hi {{userFirstName}}, This account is monitored Monday - Friday from 9am - 5pm EST. Someone from our team will contact you as soon as possible to ensure you get the help you need. You can also reach us by visiting our website https://debtsolutions.bdo.ca/ or by calling 888-855-6159",
 		"attachment": "Hi {{userFirstName}}, This account is monitored Monday - Friday from 9am - 5pm EST. Someone from our team will contact you as soon as possible to ensure you get the help you need. You can also reach us by visiting our website https://debtsolutions.bdo.ca/ or by calling 888-855-6159"
 	},
 	"I'm doing research": "I'm doing research",
@@ -38,5 +40,7 @@
 	"menu": {
 		"help": "menu.help",
 		"start_over": "menu.start_over"
-	}
+	},
+	"BDOcallclick": "BDOcallclick",
+	"callclick": "callclick"
 }
