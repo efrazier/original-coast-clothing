@@ -21,7 +21,8 @@ const ENV_VARS = [
   "APP_SECRET",
   "VERIFY_TOKEN",
   "APP_URL",
-  "SHOP_URL"
+  "SHOP_URL",
+  "BDO_URL"
 ];
 
 module.exports = {
@@ -42,7 +43,7 @@ module.exports = {
   // URL of your website
   shopUrl: process.env.SHOP_URL,
 
-  research: process.env.BDO_URL,
+  bdoUrl: process.env.BDO_URL,
 
 
   // Persona IDs

@@ -92,6 +92,28 @@ module.exports = class Response {
     return response;
   }
 
+  static genButtonTemplatePhone(title, phoneNumber) {
+    let response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: title,
+          buttons: [
+           {
+            "type":"phone_number",
+            "title":"Call BDO",
+            "payload":"+18888556159"
+           }
+           ] 
+        }
+      }
+    };
+
+    return response;
+  }  
+
+
   static genText(text) {
     let response = {
       text: text

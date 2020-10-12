@@ -60,15 +60,15 @@
 		"help": "Help"
 	},
 	"bdo": {
-		"prompt": "BDO has a number of resources on Debt Solutions.  \n\n Get the help you need.  \n\nRead More.  \n\nhttps://debtsolutions.bdo.ca/",
-		"yesmenu": "What are you looking for help with?  \n\n1. I am struggling financially  \n\n2. I can only make minimum payments on my debts  \n\n3. I am looking for budgeting advice  \n\n4. I want to reduce interest charges  \n\n",
-		"struggle": "1",
-		"minpay": "2",
+		"prompt": "BDO has many resources on our web site. Read More.  \n\nhttps://debtsolutions.bdo.ca/",
+		"yesmenu": "Would you like to call us now? Or have us contact you?",
+		"callusbutton": "Click to Call Now 1-888-855-6159",
+		"contactthem": "Contact Me",
 		"advice": "3",
 		"reduce": "4",
 		"style": "bdo.style",
 		"end": "bdo.end",
-		"talktosomeone": "bdo.talktosomeone",
+		"talktosomeone": "Please provide us with your email, name & phone number so a BDO representative can get in touch with you.",
 		"phone": "bdo.phone",
 		"email": "bdo.email"
 	},
@@ -87,5 +87,9 @@
 		"attachment": "Thanks for sending this attachment, we can connect you to an agent to review it or we can start over"
 	},
 	"I'm doing research": "I'm doing research",
-	"Yes": "Yes"
+	"Yes": "Yes",
+	"weburl": "weburl",
+	"postback": "postback",
+	"BUTTOMS": "BUTTOMS",
+	"phone": "phone"
 }

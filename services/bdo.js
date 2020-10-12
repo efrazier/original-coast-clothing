@@ -98,32 +98,41 @@ module.exports = class Bdo {
           }),
           [
             {
-              title: i18n.__("bdo.struggle"),
-              payload: "bdo_struggle"
-            },
-            {
-              title: i18n.__("bdo.minpay"),
-              payload: "bdo_minpay"
-            },
-            {
-              title: i18n.__("bdo.advice"),
-              payload: "bdo_advice"
-            },
-            {
-              title: i18n.__("bdo.reduce"),
-              payload: "bdo_reduce"
-            },
-             {
-              title: i18n.__("bdo.reduce"),
+              title: i18n.__("bdo.callusbutton"),
               payload: "bdo_reduce",
-              content_type: "user_email"
+            },
+            {
+              title: i18n.__("bdo.contactthem"),
+              payload: "bdo_minpay"
             }
           ]
         );
         break;
 
       case "bdo_reduce":
-
+	response = Response.genButtonTemplatePhone("Phone Me");
+/*
+     let buttons = [
+      Response.genWebUrlButton(
+        i18n.__("weburl"),
+        `${config.bdoUrl}/products/outfit}`
+      ),
+      Response.genPostbackButton(
+        i18n.__("postback"),
+        "CURATION_OTHER_STYLE"
+      ),
+      Response.genButtonPhone(
+        i18n.__("phone"),
+        "+18888556159" 
+      ),
+    ];
+   
+    response = Response.genButtonTemplate(
+      i18n.__("BUTTOMS"),
+      buttons
+    );
+*/
+/*
             response = Response.genQuickReply(
           i18n.__("bdo.talktosomeone", {
             userFirstName: this.user.firstName
@@ -141,6 +150,7 @@ module.exports = class Bdo {
             }
           ]
         );
+  */ 
         break;
 
       case "bdo_OTHER":
