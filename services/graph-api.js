@@ -343,73 +343,73 @@ module.exports = class GraphAPi {
     );
   }
 
-  static postCRM(data, page_id){
+static postCRM(data, page_id){
 
-try {
-  data = utf8.encode(data);
-} catch(e) {
-  logLeadPostCRM.log('info','Unicode Convert Error' + e);
-   
-}
-
-try {
-    logLeadPostCRM.log('info',data);
-    data = JSON.parse(data);
-  } catch (e) {
-    logLeadPostCRM.log('info','JSON Parse Error' + e);
-  }
-
-logLeadPostCRM.log('info','Posting to CRM');
-logLeadPostCRM.log('info',data);
-logLeadPostCRM.log('info',page_id);
-
-console.log(data);
-
-outdata = {};
- this.psid = psid;
-    this.firstName = "";
-    this.lastName = "";
-    this.locale = "";
-    this.timezone = "";
-    this.gender = "neutral";
-
-outdata.firstname = data.firstName;
-outdata.lastname = data.lastName;
-outdata.email = data.email;
-outdata.city = 'facebook';
-outdata.phone = data.phone;
-outdata.url = 'https://www.facebook.com/#location=' + outdata.city
-
-console.log("OUTDATA ",outdata);
-
-const axios = require('axios').default;
-const querystring = require('querystring');
-
-var ourdata =  querystring.stringify(
-   {
-     'url': outdata.url,
-     'token': process.env.FA_TOKEN,
-     'your-name': outdata.firstname,
-     'last-name': outdata.lastname,
-     'your-email': outdata.email,
-     'accept-this': 1,
-     'telephone': outdata.phone,
-     'hear-about': 'Facebook',
-     'referral-partner': 'Agency Facebook Messenger'
-    }
-);
-
-axios({
-  method: 'post',
-  url: process.env.FA_URL,
-  data: ourdata,
-  headers: {
-      'Content-Type' : 'application/x-www-form-urlencoded'
-   }
-}).then(function (response) {
-    console.log("RES ",response);
-    logLeadPostCRM.log('info',response);
-});
+     try {
+       data = utf8.encode(data);
+     } catch(e) {
+       logLeadPostCRM.log('info','Unicode Convert Error' + e);
+        
+     }
+     
+     try {
+         logLeadPostCRM.log('info',data);
+         data = JSON.parse(data);
+       } catch (e) {
+         logLeadPostCRM.log('info','JSON Parse Error' + e);
+       }
+     
+     logLeadPostCRM.log('info','Posting to CRM');
+     logLeadPostCRM.log('info',data);
+     logLeadPostCRM.log('info',page_id);
+     
+     console.log(data);
+     
+     outdata = {};
+      this.psid = psid;
+         this.firstName = "";
+         this.lastName = "";
+         this.locale = "";
+         this.timezone = "";
+         this.gender = "neutral";
+     
+     outdata.firstname = data.firstName;
+     outdata.lastname = data.lastName;
+     outdata.email = data.email;
+     outdata.city = 'facebook';
+     outdata.phone = data.phone;
+     outdata.url = 'https://www.facebook.com/#location=' + outdata.city
+     
+     console.log("OUTDATA ",outdata);
+     
+     const axios = require('axios').default;
+     const querystring = require('querystring');
+     
+     var ourdata =  querystring.stringify(
+        {
+          'url': outdata.url,
+          'token': process.env.FA_TOKEN,
+          'your-name': outdata.firstname,
+          'last-name': outdata.lastname,
+          'your-email': outdata.email,
+          'accept-this': 1,
+          'telephone': outdata.phone,
+          'hear-about': 'Facebook',
+          'referral-partner': 'Agency Facebook Messenger'
+         }
+     );
+     
+     axios({
+       method: 'post',
+       url: process.env.FA_URL,
+       data: ourdata,
+       headers: {
+           'Content-Type' : 'application/x-www-form-urlencoded'
+        }
+     }).then(function (response) {
+         console.log("RES ",response);
+         logLeadPostCRM.log('info',response);
+     });
 
 }
 
