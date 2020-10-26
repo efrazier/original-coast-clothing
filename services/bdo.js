@@ -26,23 +26,19 @@ module.exports = class Bdo {
     let response;
 
     switch (payload) {
-      case "RESEARCH-not-in-use":
+      case "APP_REVIEW_START":
         response = Response.genQuickReply(
-          i18n.__("bdo.prompt", {
+          i18n.__("bdo.addstart", {
             userFirstName: this.user.firstName
           }),
           [
             {
-              title: i18n.__("bdo.order"),
-              payload: "bdo_ORDER"
+              title: i18n.__("bdo.yes"),
+              payload: "bdo_YES"
             },
             {
-              title: i18n.__("bdo.billing"),
-              payload: "bdo_BILLING"
-            },
-            {
-              title: i18n.__("bdo.other"),
-              payload: "bdo_OTHER"
+              title: i18n.__("bdo.research"),
+              payload: "bdo_RESEARCH"
             }
           ]
         );
@@ -52,8 +48,30 @@ module.exports = class Bdo {
           Response.genText(i18n.__("bdo.prompt")),
         ];
         break;
+      case "bdo_RESEARCH":
+         response = [
+          Response.genText(i18n.__("bdo.prompt")),
+        ];
+        break;
 
       case "YES":
+         response = Response.genQuickReply(
+          i18n.__("bdo.yesmenu", {
+            userFirstName: this.user.firstName
+          }),
+          [
+            {
+              title: i18n.__("bdo.callusbutton"),
+              payload: "bdo_callusnow",
+            },
+            {
+              title: i18n.__("bdo.contactthem"),
+              payload: "bdo_contactme"
+            }
+          ]
+        );
+        break;
+      case "bdo_YES":
          response = Response.genQuickReply(
           i18n.__("bdo.yesmenu", {
             userFirstName: this.user.firstName

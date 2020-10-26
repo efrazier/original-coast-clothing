@@ -121,6 +121,10 @@ else if (message.includes("#")) {
       response = care.handlePayload("CARE_HELP");
 */
    // THESE ARE SPECIAL CASES THAT HAVE TO BE HANDLED HERE BECAUSE THE PROMPTS COME FROM THE AD!!
+    else if (message.includes(i18n.__("APP_REVIEW_START").toLowerCase())) {
+       let bdo = new Bdo(this.user, this.webhookEvent);
+      response = bdo.handlePayload("APP_REVIEW_START");
+    }
     else if (message.includes(i18n.__("I'm doing research").toLowerCase())) {
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("RESEARCH");
@@ -213,7 +217,8 @@ else if (message.includes("#")) {
       payload === "GET_STARTED" ||
       payload === "DEVDOCS" ||
       payload === "GITHUB" ||
-      payload === "AD"
+      payload === "AD" || 
+      payload === "APP_REVIEW_START"
     ) {
       response = Response.genNuxMessage(this.user);
     } 

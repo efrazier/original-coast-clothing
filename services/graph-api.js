@@ -14,6 +14,19 @@
 const request = require("request"),
   camelCase = require("camelcase"),
   config = require("./config");
+// Winston logger
+let winston = require('winston');
+let logLeadPostCRM = winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.printf(info => {
+            return `${info.timestamp} ${info.level}: ${info.message}`;
+        })
+    ),
+    transports: [new winston.transports.Console({json: true}), new winston.transports.File({json: true,filename: process.env.LOG_CRM}), ]
+});
+
 
 module.exports = class GraphAPi {
   static callSendAPI(requestBody) {
@@ -168,6 +181,8 @@ module.exports = class GraphAPi {
           // console.log(response.statusCode);
 
           if (response.statusCode !== 200) {
+            console.log("REQUEST PROFILE ",request );
+            console.log("RESPONSE ", response );
             reject(Error(response.statusCode));
           }
         })
@@ -320,10 +335,97 @@ module.exports = class GraphAPi {
       error => {
         if (!error) {
           console.log(`FBA event '${eventName}'`);
+          console.log("PAGE SCOPED USER ID ",senderPsid);
         } else {
           console.error(`Unable to send FBA event '${eventName}':` + error);
         }
       }
     );
   }
+
+  static postCRM(data, page_id){
+
+try {
+  data = utf8.encode(data);
+} catch(e) {
+  logLeadPostCRM.log('info','Unicode Convert Error' + e);
+   
+}
+
+try {
+    logLeadPostCRM.log('info',data);
+    data = JSON.parse(data);
+  } catch (e) {
+    logLeadPostCRM.log('info','JSON Parse Error' + e);
+  }
+
+logLeadPostCRM.log('info','Posting to CRM');
+logLeadPostCRM.log('info',data);
+logLeadPostCRM.log('info',page_id);
+
+console.log(data);
+
+outdata = {};
+ this.psid = psid;
+    this.firstName = "";
+    this.lastName = "";
+    this.locale = "";
+    this.timezone = "";
+    this.gender = "neutral";
+
+outdata.firstname = data.firstName;
+outdata.lastname = data.lastName;
+outdata.email = data.email;
+outdata.city = 'facebook';
+outdata.phone = data.phone;
+outdata.url = 'https://www.facebook.com/#location=' + outdata.city
+
+console.log("OUTDATA ",outdata);
+
+const axios = require('axios').default;
+const querystring = require('querystring');
+
+var ourdata =  querystring.stringify(
+   {
+     'url': outdata.url,
+     'token': process.env.FA_TOKEN,
+     'your-name': outdata.firstname,
+     'last-name': outdata.lastname,
+     'your-email': outdata.email,
+     'accept-this': 1,
+     'telephone': outdata.phone,
+     'hear-about': 'Facebook',
+     'referral-partner': 'Agency Facebook Messenger'
+    }
+);
+
+axios({
+  method: 'post',
+  url: process.env.FA_URL,
+  data: ourdata,
+  headers: {
+      'Content-Type' : 'application/x-www-form-urlencoded'
+   }
+}).then(function (response) {
+    console.log("RES ",response);
+    logLeadPostCRM.log('info',response);
+});
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };

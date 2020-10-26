@@ -10,6 +10,7 @@
 	},
 	"bdo": {
 		"prompt": "BDO has many resources on our web site. Read More.  \n\nhttps://debtsolutions.bdo.ca/",
+		"addstart": "Are you looking for debt help?",
 		"yesmenu": "Would you like to call us now? Or have us contact you?",
 		"callclick": "Click to Call BDO 888-855-6159",
 		"callusbutton": "Click to Call",
@@ -21,7 +22,10 @@
 		"end": "bdo.end",
 		"talktosomeone": "Please provide us with your email, name & phone number so a BDO representative can get in touch with you.",
 		"phone": "Please enter phone number for BDO to call:",
-		"email": "Please enter your email:"
+		"email": "Please enter your email:",
+		"yes": "Yes",
+		"research": "I'm doing research",
+		"appstart": "bdo.appstart"
 	},
 	"survey": {
 		"prompt": "Hi, want to get quick feedback on your recent experience with {{agentFirstName}}",
@@ -32,7 +36,7 @@
 	},
 	"fallback": {
 		"anyold": "Sorry, but I don’t recognize \"{{message}}\".",
-                "any":"Hi {{userFirstName}}, This account is monitored Monday - Friday from 9am - 5pm EST. Someone from our team will contact you as soon as possible to ensure you get the help you need. You can also reach us by visiting our website https://debtsolutions.bdo.ca/ or by calling 888-855-6159",
+		"any": "Hi {{userFirstName}}, This account is monitored Monday - Friday from 9am - 5pm EST. Someone from our team will contact you as soon as possible to ensure you get the help you need. You can also reach us by visiting our website https://debtsolutions.bdo.ca/ or by calling 888-855-6159",
 		"attachment": "Hi {{userFirstName}}, This account is monitored Monday - Friday from 9am - 5pm EST. Someone from our team will contact you as soon as possible to ensure you get the help you need. You can also reach us by visiting our website https://debtsolutions.bdo.ca/ or by calling 888-855-6159"
 	},
 	"I'm doing research": "I'm doing research",
@@ -42,5 +46,6 @@
 		"start_over": "menu.start_over"
 	},
 	"BDOcallclick": "BDOcallclick",
-	"callclick": "callclick"
+	"callclick": "callclick",
+	"APP_REVIEW_START": "APP_REVIEW_START"
 }

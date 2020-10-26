@@ -173,6 +173,7 @@ app.post("/webhook", (req, res) => {
               "with locale:",
               i18n.getLocale()
             );
+            
             let receiveMessage = new Receive(users[senderPsid], webhookEvent);
             return receiveMessage.handleMessage();
           });
