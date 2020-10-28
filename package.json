@@ -8,6 +8,8 @@
     "lint": "./node_modules/.bin/eslint ."
   },
   "dependencies": {
+    "always-tail": "^0.2.0",
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",
     "dotenv": "^8.1.0",
@@ -17,6 +19,8 @@
     "i18n": "^0.8.3",
     "path": "^0.12.7",
     "request": "^2.88.0",
+    "sha.js": "^2.4.11",
+    "utf8": "^3.0.0",
     "winston": "^3.3.3"
   },
   "engines": {
@@ -25,7 +29,7 @@
   "repository": {
     "url": "https://github.com/fbsamples/original-coast-clothing"
   },
-  "author": "Facebook",
+  "author": "Facebook/OSB",
   "license": "ISC",
   "keywords": [
     "messenger",

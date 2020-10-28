@@ -29,6 +29,35 @@ const express = require("express"),
   i18n = require("./i18n.config"),
   app = express();
 
+
+//Logging
+let winston = require('winston');
+
+const MESSAGE = Symbol.for('message');
+const jsonFormatter = (logEntry) => {
+  const base = { timestamp: new Date() };
+  const json = Object.assign(base, logEntry);
+  logEntry[MESSAGE] = JSON.stringify(json);
+  return logEntry;
+};
+
+const logContact = winston.createLogger({
+  level: 'info',
+  format: winston.format(jsonFormatter)(),
+  transports:  [new winston.transports.Console({json: true}),
+              new winston.transports.File({json: true,filename: process.env.LOG_CRM })
+    ]
+});
+
+const logToCRM = winston.createLogger({
+  level: 'info',
+  format: winston.format(jsonFormatter)(),
+  transports:  [new winston.transports.Console({json: true}),
+              new winston.transports.File({json: true,filename: process.env.WRITE_CRM })
+    ]
+});
+
+
 var users = {};
 
 // Parse application/x-www-form-urlencoded
@@ -92,6 +121,32 @@ app.get("/webhook", (req, res) => {
     }
   }
 });
+
+
+function collectUserData(webhook,psid){
+
+let event = webhook;
+
+
+if (event.message && event.message.nlp){
+           console.log("MESSAGE TYPE NLP - early check: ",event.message.nlp.entities);
+           let nlp = event.message.nlp.entities;
+
+           for (let [key,val] of Object.entries(nlp)){
+              console.log(`${key}: ${val}`);
+
+              if (key == 'wit$phone_number:phone_number'){
+                 users[psid].phone = nlp[key][0].value;
+              }
+              if (key == 'wit$email:email'){
+                 users[psid].email = nlp[key][0].value;
+              }
+
+           }
+
+        }
+
+}
 
 // Creates the endpoint for your webhook
 app.post("/webhook", (req, res) => {
@@ -173,11 +228,12 @@ app.post("/webhook", (req, res) => {
               "with locale:",
               i18n.getLocale()
             );
+            logContact.log('info','EVENT-new-user',user);
             
             let receiveMessage = new Receive(users[senderPsid], webhookEvent);
             return receiveMessage.handleMessage();
           });
-      } else {
+      } else {  // Check to see if we have all required user data, if so, log the event
         i18n.setLocale(users[senderPsid].locale);
         console.log(
           "Profile already exists PSID:",
@@ -185,6 +241,17 @@ app.post("/webhook", (req, res) => {
           "with locale:",
           i18n.getLocale()
         );
+
+        collectUserData(webhookEvent,senderPsid);
+
+        // IMPORTANT - EF 
+        // However we collect user data, if it becomes complete log it for sending to CRM   
+        if (users[senderPsid].email && users[senderPsid].phone){
+           logToCRM.log('info','EVENT-CRMpost',users[senderPsid]); 
+        }else{
+           console.log("Not enough data yet ", users[senderPsid]);
+        }
+
         let receiveMessage = new Receive(users[senderPsid], webhookEvent);
         return receiveMessage.handleMessage();
       }

@@ -48,8 +48,9 @@ module.exports = class Receive {
 
            for (let [key,val] of Object.entries(nlp)){
               console.log(`${key}: ${val}`);
+                        
               if (key == 'wit$phone_number:phone_number'){
-                 this.user.phone=nlp[key][0].value; 
+                 this.user.phone = nlp[key][0].value; 
               }
               if (key == 'wit$email:email'){
                  this.user.email = nlp[key][0].value;
@@ -98,6 +99,7 @@ module.exports = class Receive {
     );
 
     // check greeting is here and is confident
+    let nlp = this.webhookEvent.message.nlp;
     let greeting = this.firstEntity(this.webhookEvent.message.nlp, "greetings");
     let phone = this.firstEntity(this.webhookEvent.message.nlp,"wit$phone_number:phone_number");
     let email = this.firstEntity(this.webhookEvent.message.nlp,"wit$email:email");
@@ -134,6 +136,8 @@ else if (message.includes("#")) {
     } 
     // These are special payloads without labels aka, bdo.,only NLP types
     else if (phone && phone.confidence > 0.8){
+       console.log("PHONE ",phone);
+       this.user.phone = phone.value;
       let bdo = new Bdo(this.user, this.webhookEvent);
       response = bdo.handlePayload("bdo_phone_entry");
     } else if (email && email.confidence > 0.8){
